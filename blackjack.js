@@ -61,13 +61,13 @@ class CardPlayer {
   constructor(name) {
     this.state = {
       name: name,
-      hand: this.getRandom(),
-      drawCard: this.accelerate
+      hand: this.drawCard(),
+      // drawCard: this.accelerate
       // hand: this.getRandom(),
       // drawCard: ()=>{}
     };
   }
-  getRandom() {
+  drawCard() {
     let array = [];
     const allDecks = getDeck()
     array.push(allDecks[Math.floor(Math.random()*allDecks.length)])
@@ -153,8 +153,11 @@ console.log(dealerShouldDraw(dealer.state.hand))
  */
 const determineWinner = (playerScore, dealerScore) => {
   // CREATE FUNCTION HERE
-
+  console.log(playerScore, dealerScore)
+  return `players score: ${playerScore} and dealer score ${dealerScore} ${playerScore > dealerScore ? "player wins" : playerScore < dealerScore ? "dealer wins" : "game is a tie"}`
 }
+
+console.log(determineWinner(calcPoints(player.state.hand).total, calcPoints(dealer.state.hand).total))
 
 /**
  * Creates user prompt to ask if they'd like to draw a card
