@@ -1,3 +1,55 @@
+const getDeck = () => {
+  const suits = ["hearts", "spades", "clubs", "diamonds"]
+  let deck = []
+  suits.map(item => {
+    for (let x = 1; x <= 13; x++) {
+      let displayVal = ""
+      switch (x) {
+        case 1:
+          displayVal = "Ace"
+          break;
+        case 2:
+        case 3:
+        case 4:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+          displayVal = "J"
+          break;
+        case 11:
+          displayVal = "Jack"
+          break;
+        case 12:
+          displayVal = "Queen"
+          break;
+        case 13:
+          displayVal = "King"
+          break;
+        default:
+          break;
+      }
+      const card = {
+        val: x,
+        displayVal: displayVal,
+        suit: item
+      }
+      if(displayVal === "Ace") {
+        card.val = 11
+      } else if(displayVal === "Jack") {
+        card.val = 10
+      } else if(displayVal === "Queen") {
+        card.val = 10
+      } else if(displayVal === "King") {
+        card.val = 10
+      }
+      deck.push(card)
+    }
+  })
+  return deck
+}
+
 const blackjackDeck = getDeck();
 
 /**
@@ -5,11 +57,51 @@ const blackjackDeck = getDeck();
  * @constructor
  * @param {string} name - The name of the player
  */
-class CardPlayer {}; //TODO
+class CardPlayer {
+  constructor(name) {
+    this.state = {
+      name: name,
+      hand: this.getRandom(),
+      drawCard: this.accelerate
+      // hand: this.getRandom(),
+      // drawCard: ()=>{}
+    };
+  }
+  getRandom() {
+    let array = [];
+    const allDecks = getDeck()
+    array.push(allDecks[Math.floor(Math.random()*allDecks.length)])
+    return array
+  }
+  accelerate() {
+    console.log("FVGD")
+    const allDecks = getDeck()
+    let array = [];
+    console.log(this.state.hand)
+    // this.setState({ hand: "gyu" })
+    // array.push(allDecks[Math.floor(Math.random()*allDecks.length)])
+    console.log(array)
+    console.log(`${this.state.name} moving to ${allDecks[0].suit}`)
+  }
+  render() {
+    return {
+      drawCard,
+      name,
+      hand
+    }
+  }
+}; //TODO
+
+const result = new CardPlayer("Paul");
+console.log(result)
+result.accelerate()
 
 // CREATE TWO NEW CardPlayers
-const dealer; // TODO
-const player; // TODO
+const dealer = new CardPlayer("Player"); // TODO
+const player = new CardPlayer("Dealer"); // TODO
+
+console.log(dealer)
+console.log(player)
 
 /**
  * Calculates the score of a Blackjack hand
@@ -20,8 +112,21 @@ const player; // TODO
  */
 const calcPoints = (hand) => {
   // CREATE FUNCTION HERE
-
+  if(hand[0].displayVal == "Ace") {
+    return {
+      total: hand[0].val,
+      isSoft: true
+    }
+  } else {
+    return {
+      total: hand[0].val,
+      isSoft: false
+    }
+  }
+  // hand.map((item)=>)
 }
+
+console.log(calcPoints(dealer.state.hand))
 
 /**
  * Determines whether the dealer should draw another card.
@@ -31,8 +136,10 @@ const calcPoints = (hand) => {
  */
 const dealerShouldDraw = (dealerHand) => {
   // CREATE FUNCTION HERE
-
+  calcPoints()
 }
+
+console.log(dealerShouldDraw())
 
 /**
  * Determines the winner if both player and dealer stand
