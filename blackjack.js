@@ -112,23 +112,21 @@ console.log(player)
  */
 const calcPoints = (hand) => {
   // CREATE FUNCTION HERE
-  console.log(hand)
-  if(hand[0].displayVal == "Ace") {
-    return {
-      total: hand[0].val,
-      isSoft: true
-    }
-  } else {
-    return {
-      total: hand[0].val,
-      isSoft: false
-    }
+  let total = {
+    total: 0,
+    isSoft: false
   }
-  // return hand
-  // hand.map((item)=>)
+  hand.map((item)=>{
+    total.total = total.total + item.val
+    if(item.displayVal == "Ace") {
+      total.isSoft = true
+    }
+  })
+  return total
 }
-
-console.log(calcPoints(dealer.state.hand))
+dealer.drawCard()
+dealer.drawCard()
+console.log(calcPoints(dealer.state?.hand))
 
 /**
  * Determines whether the dealer should draw another card.
@@ -144,7 +142,6 @@ const dealerShouldDraw = (dealerHand) => {
     return false
   }
 }
-
 console.log(dealerShouldDraw(dealer.state.hand))
 
 /**
