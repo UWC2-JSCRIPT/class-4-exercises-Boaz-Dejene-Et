@@ -61,7 +61,7 @@ class CardPlayer {
   constructor(name) {
     this.state = {
       name: name,
-      hand: this.drawCard(),
+      hand: [],
       // drawCard: this.accelerate
       // hand: this.getRandom(),
       // drawCard: ()=>{}
@@ -69,23 +69,22 @@ class CardPlayer {
   }
   drawCard() {
     let array = [];
-    const allDecks = getDeck()
-    array.push(allDecks[Math.floor(Math.random()*allDecks.length)])
-    return array
+    const allDecks = getDeck();
+    array.push(allDecks[Math.floor(Math.random() * allDecks.length)]);
+    this.state.hand.push(...array);
   }
-  accelerate() {
-    console.log("FVGD")
-    const allDecks = getDeck()
-    let array = [];
-    console.log(this.state.hand)
-    // this.setState({ hand: "gyu" })
-    // array.push(allDecks[Math.floor(Math.random()*allDecks.length)])
-    console.log(array)
-    console.log(`${this.state.name} moving to ${allDecks[0].suit}`)
-  }
+  // accelerate() {
+  //   console.log("FVGD")
+  //   const allDecks = getDeck()
+  //   let array = [];
+  //   console.log(this.state.hand)
+  //   // this.setState({ hand: "gyu" })
+  //   // array.push(allDecks[Math.floor(Math.random()*allDecks.length)])
+  //   console.log(array)
+  //   console.log(`${this.state.name} moving to ${allDecks[0].suit}`)
+  // }
   render() {
     return {
-      drawCard,
       name,
       hand
     }
@@ -93,8 +92,9 @@ class CardPlayer {
 }; //TODO
 
 const result = new CardPlayer("Paul");
+result.drawCard()
+result.drawCard()
 console.log(result)
-result.accelerate()
 
 // CREATE TWO NEW CardPlayers
 const dealer = new CardPlayer("Player"); // TODO
@@ -112,6 +112,7 @@ console.log(player)
  */
 const calcPoints = (hand) => {
   // CREATE FUNCTION HERE
+  console.log(hand)
   if(hand[0].displayVal == "Ace") {
     return {
       total: hand[0].val,
@@ -123,6 +124,7 @@ const calcPoints = (hand) => {
       isSoft: false
     }
   }
+  // return hand
   // hand.map((item)=>)
 }
 
@@ -179,7 +181,7 @@ const showHand = (player) => {
   console.log(`${player.state.name}'s hand is ${displayHand.join(', ')} (${calcPoints(player.state.hand).total})`);
 }
 
-showHand(player)
+showHand(player.state.hand)
 
 const automaticWin = (player, dealer) => {
   let playerTotal = 0;
