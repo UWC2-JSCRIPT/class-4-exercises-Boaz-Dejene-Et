@@ -189,13 +189,29 @@ const getMessage = (count, dealerCard) => {
  * @param {CardPlayer} player 
  */
 const showHand = (player) => {
-  // console.log(player)
-  // const displayHand = player.state.hand.map((card) => card.displayVal);
-  // document.getElementById("display").innerHTML = `${player.state.name}'s hand is ${displayHand.join(', ')} (${calcPoints(player.state.hand).total})`;
-  // console.log(`${player.state.name}'s hand is ${displayHand.join(', ')} (${calcPoints(player.state.hand).total})`);
+  console.log(player)
+  const displayHand = player.state.hand.map((card) => card.displayVal);
+  document.getElementById("display").innerHTML = `${player.state.name}'s hand is ${displayHand.join(', ')} (${calcPoints(player.state.hand).total})`;
+  console.log(`${player.state.name}'s hand is ${displayHand.join(', ')} (${calcPoints(player.state.hand).total})`);
 }
 
-showHand(player.state.hand)
+showHand(player)
+
+// last bounce question
+const additionalLogic = (player, dealer) => {
+  if(player.state.hand.length > 1){
+    if((player.state.hand[0].val + player.state.hand[1]) == 21) {
+      return 'the first card total is 21 - you win!'
+    }
+  }
+  if(dealer.state.hand.length > 1) {
+    if((dealer.state.hand[0].val + dealer.state.hand[1]) == 21) {
+      return 'the first card total is 21 - you lose!'
+    }
+  }
+}
+
+console.log(additionalLogic(player, dealer))
 
 /**
  * Runs Blackjack Game
