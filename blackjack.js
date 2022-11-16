@@ -136,10 +136,14 @@ console.log(calcPoints(dealer.state.hand))
  */
 const dealerShouldDraw = (dealerHand) => {
   // CREATE FUNCTION HERE
-  calcPoints()
+  if(calcPoints(dealerHand).isSoft == true){
+    return true
+  } else {
+    return false
+  }
 }
 
-console.log(dealerShouldDraw())
+console.log(dealerShouldDraw(dealer.state.hand))
 
 /**
  * Determines the winner if both player and dealer stand
