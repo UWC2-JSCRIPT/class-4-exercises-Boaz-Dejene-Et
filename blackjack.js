@@ -97,8 +97,8 @@ result.drawCard()
 console.log(result)
 
 // CREATE TWO NEW CardPlayers
-const dealer = new CardPlayer("Player"); // TODO
-const player = new CardPlayer("Dealer"); // TODO
+const dealer = new CardPlayer("Dealer"); // TODO
+const player = new CardPlayer("Player"); // TODO
 
 console.log(dealer)
 console.log(player)
@@ -124,6 +124,7 @@ const calcPoints = (hand) => {
   })
   return total
 }
+
 dealer.drawCard()
 dealer.drawCard()
 console.log(calcPoints(dealer.state?.hand))
@@ -136,8 +137,12 @@ console.log(calcPoints(dealer.state?.hand))
  */
 const dealerShouldDraw = (dealerHand) => {
   // CREATE FUNCTION HERE
-  if(calcPoints(dealerHand).isSoft == true){
+  if(calcPoints(dealerHand).total >= 16){
     return true
+  } else if (calcPoints(dealerHand).total == 17 && calcPoints(dealerHand).isSoft) {
+    return true
+  } else if (calcPoints(dealerHand).total >= 17) {
+    return false
   } else {
     return false
   }
@@ -156,7 +161,7 @@ const determineWinner = (playerScore, dealerScore) => {
   return `players score: ${playerScore} and dealer score ${dealerScore} ${playerScore > dealerScore ? "player wins" : playerScore < dealerScore ? "dealer wins" : "game is a tie"}`
 }
 
-console.log(determineWinner(calcPoints(player.state.hand).total, calcPoints(dealer.state.hand).total))
+console.log(determineWinner(calcPoints(dealer.state?.hand).total, calcPoints(dealer.state.hand).total))
 
 /**
  * Creates user prompt to ask if they'd like to draw a card
