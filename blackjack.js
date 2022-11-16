@@ -173,9 +173,32 @@ const getMessage = (count, dealerCard) => {
  * @param {CardPlayer} player 
  */
 const showHand = (player) => {
-  const displayHand = player.hand.map((card) => card.displayVal);
-  console.log(`${player.name}'s hand is ${displayHand.join(', ')} (${calcPoints(player.hand).total})`);
+  console.log(player)
+  const displayHand = player.state.hand.map((card) => card.displayVal);
+  document.getElementById("display").innerHTML = `${player.state.name}'s hand is ${displayHand.join(', ')} (${calcPoints(player.state.hand).total})`;
+  console.log(`${player.state.name}'s hand is ${displayHand.join(', ')} (${calcPoints(player.state.hand).total})`);
 }
+
+showHand(player)
+
+const automaticWin = (player, dealer) => {
+  let playerTotal = 0;
+  let dealerTotal = 0;
+  player.map(item=>(
+    item.val + playerTotal
+  ))
+  dealer.map(item=>(
+    item.val + dealerTotal
+  ))
+  if(playerTotal==21) {
+    console.log("player wins")
+  }
+  if(dealerTotal==21) {
+    console.log("player wins")
+  }
+}
+
+automaticWin(player.state, dealer.state)
 
 /**
  * Runs Blackjack Game
@@ -211,4 +234,4 @@ const startGame = function() {
 
   return determineWinner(playerScore, dealerScore);
 }
-// console.log(startGame());
+console.log(startGame());
