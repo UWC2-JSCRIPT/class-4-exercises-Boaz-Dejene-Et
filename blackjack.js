@@ -125,10 +125,6 @@ const calcPoints = (hand) => {
   return total
 }
 
-dealer.drawCard()
-dealer.drawCard()
-console.log(calcPoints(dealer.state?.hand))
-
 /**
  * Determines whether the dealer should draw another card.
  * 
@@ -147,7 +143,7 @@ const dealerShouldDraw = (dealerHand) => {
     return false
   }
 }
-console.log(dealerShouldDraw(dealer.state.hand))
+// console.log(dealerShouldDraw(dealer.state.hand))
 
 /**
  * Determines the winner if both player and dealer stand
@@ -158,10 +154,26 @@ console.log(dealerShouldDraw(dealer.state.hand))
 const determineWinner = (playerScore, dealerScore) => {
   // CREATE FUNCTION HERE
   console.log(playerScore, dealerScore)
-  return `players score: ${playerScore} and dealer score ${dealerScore} ${playerScore > dealerScore ? "player wins" : playerScore < dealerScore ? "dealer wins" : "game is a tie"}`
+  if (playerScore > 21) {
+    console.log(`players score: ${playerScore} and dealer score ${dealerScore} - you lose!`)
+    return `players score: ${playerScore} and dealer score ${dealerScore} - you lose!`
+  } else if (playerScore == 21) {
+    console.log(`players score: ${playerScore} and dealer score ${dealerScore} - you win!`)
+    return `players score: ${playerScore} and dealer score ${dealerScore} - you win!`
+  }
+  if (dealerScore > 21) {
+    console.log(`players score: ${playerScore} and dealer score ${dealerScore} - you win!`)
+    return `players score: ${playerScore} and dealer score ${dealerScore} - you win!`
+  } else if (dealerScore == 21) {
+    console.log(`players score: ${playerScore} and dealer score ${dealerScore} - you win!`)
+    return `players score: ${playerScore} and dealer score ${dealerScore} - you win!`
+  }
+  if (dealerScore === playerScore) {
+    console.log(`players score: ${playerScore} and dealer score ${dealerScore} - tie`)
+  }
 }
 
-console.log(determineWinner(calcPoints(dealer.state?.hand).total, calcPoints(dealer.state.hand).total))
+// console.log(determineWinner(calcPoints(player.state?.hand).total, calcPoints(dealer.state.hand).total))
 
 /**
  * Creates user prompt to ask if they'd like to draw a card
@@ -177,32 +189,13 @@ const getMessage = (count, dealerCard) => {
  * @param {CardPlayer} player 
  */
 const showHand = (player) => {
-  console.log(player)
-  const displayHand = player.state.hand.map((card) => card.displayVal);
-  document.getElementById("display").innerHTML = `${player.state.name}'s hand is ${displayHand.join(', ')} (${calcPoints(player.state.hand).total})`;
-  console.log(`${player.state.name}'s hand is ${displayHand.join(', ')} (${calcPoints(player.state.hand).total})`);
+  // console.log(player)
+  // const displayHand = player.state.hand.map((card) => card.displayVal);
+  // document.getElementById("display").innerHTML = `${player.state.name}'s hand is ${displayHand.join(', ')} (${calcPoints(player.state.hand).total})`;
+  // console.log(`${player.state.name}'s hand is ${displayHand.join(', ')} (${calcPoints(player.state.hand).total})`);
 }
 
 showHand(player.state.hand)
-
-const automaticWin = (player, dealer) => {
-  let playerTotal = 0;
-  let dealerTotal = 0;
-  player.map(item=>(
-    item.val + playerTotal
-  ))
-  dealer.map(item=>(
-    item.val + dealerTotal
-  ))
-  if(playerTotal==21) {
-    console.log("player wins")
-  }
-  if(dealerTotal==21) {
-    console.log("player wins")
-  }
-}
-
-automaticWin(player.state, dealer.state)
 
 /**
  * Runs Blackjack Game
@@ -213,11 +206,11 @@ const startGame = function() {
   player.drawCard();
   dealer.drawCard();
 
-  let playerScore = calcPoints(player.hand).total;
+  let playerScore = calcPoints(player.state.hand).total;
   showHand(player);
-  while (playerScore < 21 && confirm(getMessage(playerScore, dealer.hand[0]))) {
+  while (playerScore < 21 && confirm(getMessage(playerScore, dealer.state.hand[0]))) {
     player.drawCard();
-    playerScore = calcPoints(player.hand).total;
+    playerScore = calcPoints(player.state.hand).total;
     showHand(player);
   }
   if (playerScore > 21) {
@@ -225,10 +218,10 @@ const startGame = function() {
   }
   console.log(`Player stands at ${playerScore}`);
 
-  let dealerScore = calcPoints(dealer.hand).total;
-  while (dealerScore < 21 && dealerShouldDraw(dealer.hand)) {
+  let dealerScore = calcPoints(dealer.state.hand).total;
+  while (dealerScore < 21 && dealerShouldDraw(dealer.state.hand)) {
     dealer.drawCard();
-    dealerScore = calcPoints(dealer.hand).total;
+    dealerScore = calcPoints(dealer.state.hand).total;
     showHand(dealer);
   }
   if (dealerScore > 21) {
